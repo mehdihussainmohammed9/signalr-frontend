@@ -16,10 +16,17 @@ export default function Home() {
 
   const handleConnect = async () => {
     try {
-      await signalRService.startConnection();
-      setIsConnected(true);
-      setConnectionStatus("Connected");
+      // Build the connection first
+      signalRService.buildConnection();
 
+      // Clear any existing listeners to prevent duplicates
+      signalRService.off("ReceiveMessage");
+      signalRService.off("YourConnectionId");
+      signalRService.off("UserConnected");
+      signalRService.off("UserDisconnected");
+      signalRService.off("AllConnectedUsers");
+
+      // Set up event listeners BEFORE connecting
       signalRService.on("ReceiveMessage", (data) => {
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -96,6 +103,11 @@ export default function Home() {
         });
       });
 
+      // Now start the connection
+      await signalRService.startConnection();
+      setIsConnected(true);
+      setConnectionStatus("Connected");
+
     } catch (error) {
       console.error("Connection failed: ", error);
       setConnectionStatus("Connection Failed");
@@ -123,6 +135,13 @@ export default function Home() {
 
   const handleDisconnect = async () => {
     try {
+      // Clean up event listeners
+      signalRService.off("ReceiveMessage");
+      signalRService.off("YourConnectionId");
+      signalRService.off("UserConnected");
+      signalRService.off("UserDisconnected");
+      signalRService.off("AllConnectedUsers");
+
       await signalRService.stopConnection();
       setIsConnected(false);
       setConnectionStatus("Disconnected");

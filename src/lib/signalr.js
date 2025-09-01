@@ -9,14 +9,21 @@ class SignalRService {
     this.isConnected = false;
   }
 
-  async startConnection() {
-    if (this.isConnected) return;
+  buildConnection() {
+    if (this.connection) return; // Connection already built
 
     this.connection = new HubConnectionBuilder()
       .withUrl(`${config.BACKEND_URL}${config.CHAT_HUB}`)
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();
+  }
+
+  async startConnection() {
+    if (this.isConnected) return;
+
+    // Build connection if not already built
+    this.buildConnection();
 
     try {
       await this.connection.start();
@@ -33,6 +40,8 @@ class SignalRService {
       this.isConnected = false;
       console.log("SignalR Disconnected");
     }
+    // Clear the connection object so it can be rebuilt
+    this.connection = null;
   }
 
   on(methodName, callback) {
