@@ -1,6 +1,7 @@
 "use client";
 
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
+import config from "./config";
 
 class GridService {
   constructor() {
@@ -14,7 +15,7 @@ class GridService {
     if (this.isConnected) return;
 
     this.connection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5006/gridhub")
+      .withUrl(`${config.BACKEND_URL}${config.GRID_HUB}`)
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();

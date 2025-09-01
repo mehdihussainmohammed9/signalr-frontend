@@ -1,6 +1,7 @@
 "use client";
 
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
+import config from "./config";
 
 class SignalRService {
   constructor() {
@@ -12,7 +13,7 @@ class SignalRService {
     if (this.isConnected) return;
 
     this.connection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5006/chathub")
+      .withUrl(`${config.BACKEND_URL}${config.CHAT_HUB}`)
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();

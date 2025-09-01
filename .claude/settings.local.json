@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend\\Hubs/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend\\Hubs/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend/**)",
+      "Read(C:\\Users\\Hussain\\Documents\\databeat\\poc2\\signalr\\signalr-backend/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

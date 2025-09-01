@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signalRService } from "@/lib/signalr";
 import { CollaborativeGrid } from "@/components/CollaborativeGrid";
 import { SimpleCollaborativeGrid } from "@/components/SimpleCollaborativeGrid";
+import config from "@/lib/config";
 
 export default function Home() {
   const [messages, setMessages] = useState([]);
@@ -132,6 +133,18 @@ export default function Home() {
             <p className="text-blue-100">
               Status: {connectionStatus}
             </p>
+            <div className="flex items-center gap-2 mt-2">
+              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                config.isDevelopment 
+                  ? 'bg-yellow-500 text-yellow-900' 
+                  : 'bg-green-500 text-green-900'
+              }`}>
+                {config.isDevelopment ? '🔧 Development' : '☁️ Production (Azure)'}
+              </span>
+              <span className="text-blue-200 text-xs">
+                Backend: {config.BACKEND_URL}
+              </span>
+            </div>
           </div>
 
           {/* Main Content */}
@@ -262,7 +275,7 @@ export default function Home() {
                 </div>
                 <div>
                   <span className="text-gray-600">Backend URL:</span>
-                  <span className="ml-2 font-medium">localhost:5006/chathub</span>
+                  <span className="ml-2 font-medium">{config.BACKEND_URL}{config.CHAT_HUB}</span>
                 </div>
               </div>
             </div>

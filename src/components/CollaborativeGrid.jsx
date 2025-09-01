@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { gridService } from "@/lib/gridService";
+import config from "@/lib/config";
 
 export const CollaborativeGrid = () => {
   const [isConnected, setIsConnected] = useState(false);
@@ -159,7 +160,7 @@ export const CollaborativeGrid = () => {
               </button>
               <button
                 onClick={() => {
-                  fetch('http://localhost:5006/gridhub')
+                  fetch(`${config.BACKEND_URL}${config.GRID_HUB}`)
                     .then(response => {
                       console.log('GridHub endpoint response:', response.status);
                       alert(`GridHub endpoint status: ${response.status}`);
