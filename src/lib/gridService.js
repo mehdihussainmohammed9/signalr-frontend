@@ -22,6 +22,7 @@ class GridService {
     // Set up event listeners
     this.connection.on("UserInfo", (userInfo) => {
       console.log("User info received:", userInfo);
+      console.log("User info received:", userInfo);
       this.currentUser = userInfo;
       this.trigger('userInfo', userInfo);
     });
