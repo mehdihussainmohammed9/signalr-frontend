@@ -38,6 +38,10 @@ export default function Home() {
 
       signalRService.on("UserConnected", (connectionId) => {
         setConnectedUsers((prev) => {
+          // Avoid duplicates
+          if (prev.includes(connectionId)) {
+            return prev;
+          }
           const updatedUsers = [...prev, connectionId];
           setMessages((prevMessages) => [
             ...prevMessages,
@@ -67,15 +71,29 @@ export default function Home() {
       });
 
       signalRService.on("AllConnectedUsers", (usersList) => {
-        setConnectedUsers(usersList);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { 
-            type: "system", 
-            data: `Received user list: ${usersList.length} users online`, 
-            timestamp: new Date().toLocaleTimeString()
+        console.log("Received user list from backend:", usersList);
+        const users = usersList || [];
+        setConnectedUsers(users);
+        
+        // Only show message if there's a meaningful change
+        setMessages((prevMessages) => {
+          const lastMessage = prevMessages[prevMessages.length - 1];
+          const newCount = users.length;
+          
+          // Don't spam with identical count messages
+          if (lastMessage && lastMessage.data.includes(`${newCount} users online`)) {
+            return prevMessages;
           }
-        ]);
+          
+          return [
+            ...prevMessages,
+            { 
+              type: "system", 
+              data: `📊 ${newCount} user${newCount === 1 ? '' : 's'} online`, 
+              timestamp: new Date().toLocaleTimeString()
+            }
+          ];
+        });
       });
 
     } catch (error) {
@@ -167,22 +185,6 @@ export default function Home() {
                 Disconnect
               </button>
 
-              {/* CORS Test Button */}
-              <button
-                onClick={async () => {
-                  try {
-                    const response = await fetch(`${config.BACKEND_URL}/api/cors-test`);
-                    const data = await response.json();
-                    alert(`CORS Test Success! Response: ${JSON.stringify(data, null, 2)}`);
-                  } catch (error) {
-                    alert(`CORS Test Failed: ${error.message}`);
-                    console.error('CORS test error:', error);
-                  }
-                }}
-                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm"
-              >
-                🧪 Test CORS
-              </button>
             </div>
 
             {/* Send Data Section - Hidden */}
@@ -303,11 +305,10 @@ export default function Home() {
         <div className="mt-6 bg-white rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-2">Instructions:</h2>
           <ol className="text-sm text-gray-600 space-y-1">
-            <li>1. Click <strong>🧪 Test CORS</strong> to verify backend connectivity</li>
-            <li>2. Click <strong>Connect</strong> to establish SignalR connection to backend</li>
-            <li>3. Watch automatic messages from the backend appear in real-time</li>
-            <li>4. Monitor connection status and connected users</li>
-            <li>5. Click <strong>Disconnect</strong> to close the connection</li>
+            <li>1. Click <strong>Connect</strong> to establish SignalR connection to backend</li>
+            <li>2. Watch automatic messages from the backend appear in real-time</li>
+            <li>3. Monitor connection status and connected users</li>
+            <li>4. Click <strong>Disconnect</strong> to close the connection</li>
           </ol>
         </div>
 
