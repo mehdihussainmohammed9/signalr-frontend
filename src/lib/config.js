@@ -15,7 +15,7 @@
 
 // Determine if we're in development or production
 const isDevelopment = process.env.NODE_ENV === 'development' || 
-                      typeof window !== 'undefined' && window.location.hostname === 'localhost';
+                      (typeof window !== 'undefined' && window.location.hostname === 'localhost');
 
 // Backend configuration
 const config = {

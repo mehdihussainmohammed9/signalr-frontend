@@ -150,7 +150,7 @@ export default function Home() {
           {/* Main Content */}
           <div className="p-6">
             {/* Control Buttons */}
-            <div className="mb-6 flex gap-4">
+            <div className="mb-6 flex gap-4 flex-wrap">
               <button
                 onClick={handleConnect}
                 disabled={isConnected}
@@ -166,10 +166,27 @@ export default function Home() {
               >
                 Disconnect
               </button>
+
+              {/* CORS Test Button */}
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await fetch(`${config.BACKEND_URL}/api/cors-test`);
+                    const data = await response.json();
+                    alert(`CORS Test Success! Response: ${JSON.stringify(data, null, 2)}`);
+                  } catch (error) {
+                    alert(`CORS Test Failed: ${error.message}`);
+                    console.error('CORS test error:', error);
+                  }
+                }}
+                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm"
+              >
+                🧪 Test CORS
+              </button>
             </div>
 
-            {/* Send Data Section */}
-            <div className="mb-6">
+            {/* Send Data Section - Hidden */}
+            {/* <div className="mb-6">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -188,7 +205,7 @@ export default function Home() {
                   Send
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {/* Messages Display */}
             <div className="border border-gray-300 rounded-lg p-4 h-96 overflow-y-auto bg-gray-50">
@@ -286,22 +303,23 @@ export default function Home() {
         <div className="mt-6 bg-white rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-2">Instructions:</h2>
           <ol className="text-sm text-gray-600 space-y-1">
-            <li>1. Click <strong>Connect</strong> to establish connection to backend</li>
-            <li>2. Enter data in input field and click <strong>Send</strong> (data will appear in backend terminal)</li>
-            <li>3. Any data sent from backend will automatically appear here</li>
-            <li>4. Click <strong>Disconnect</strong> to close the connection</li>
+            <li>1. Click <strong>🧪 Test CORS</strong> to verify backend connectivity</li>
+            <li>2. Click <strong>Connect</strong> to establish SignalR connection to backend</li>
+            <li>3. Watch automatic messages from the backend appear in real-time</li>
+            <li>4. Monitor connection status and connected users</li>
+            <li>5. Click <strong>Disconnect</strong> to close the connection</li>
           </ol>
         </div>
 
-        {/* Collaborative Grid Section */}
-        <div className="mt-8">
+        {/* Collaborative Grid Section - Hidden */}
+        {/* <div className="mt-8">
           <CollaborativeGrid />
-        </div>
+        </div> */}
 
-        {/* Simple Collaborative Grid (Workaround) */}
-        <div className="mt-8">
+        {/* Simple Collaborative Grid (Workaround) - Hidden */}
+        {/* <div className="mt-8">
           <SimpleCollaborativeGrid />
-        </div>
+        </div> */}
       </div>
     </div>
   );
