@@ -204,6 +204,28 @@ export default function Home() {
                 Disconnect
               </button>
 
+              {/* Backend Health Check */}
+              <button
+                onClick={async () => {
+                  try {
+                    console.log(`Testing backend at: ${config.BACKEND_URL}`);
+                    const response = await fetch(`${config.BACKEND_URL}/health`);
+                    if (response.ok) {
+                      const data = await response.json();
+                      alert(`✅ Backend is healthy!\n${JSON.stringify(data, null, 2)}`);
+                    } else {
+                      alert(`❌ Backend responded with status: ${response.status}`);
+                    }
+                  } catch (error) {
+                    console.error('Backend health check failed:', error);
+                    alert(`❌ Backend is not reachable: ${error.message}`);
+                  }
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+              >
+                🏥 Test Backend
+              </button>
+
             </div>
 
             {/* Send Data Section - Hidden */}
@@ -324,10 +346,11 @@ export default function Home() {
         <div className="mt-6 bg-white rounded-lg shadow p-4">
           <h2 className="text-lg font-semibold mb-2">Instructions:</h2>
           <ol className="text-sm text-gray-600 space-y-1">
-            <li>1. Click <strong>Connect</strong> to establish SignalR connection to backend</li>
-            <li>2. Watch automatic messages from the backend appear in real-time</li>
-            <li>3. Monitor connection status and connected users</li>
-            <li>4. Click <strong>Disconnect</strong> to close the connection</li>
+            <li>1. Click <strong>🏥 Test Backend</strong> to verify backend is running</li>
+            <li>2. Click <strong>Connect</strong> to establish SignalR connection to backend</li>
+            <li>3. Watch automatic messages from the backend appear in real-time</li>
+            <li>4. Monitor connection status and connected users</li>
+            <li>5. Click <strong>Disconnect</strong> to close the connection</li>
           </ol>
         </div>
 
