@@ -15,7 +15,18 @@
       "Bash(npm run build:*)",
       "Bash(npm start)",
       "Bash(set PORT=3001)",
-      "Bash($env:PORT=3001)"
+      "Bash($env:PORT=3001)",
+      "Bash(git pull:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:signalr-poc-appservice-evhmczdcbfdgfwem.eastasia-01.azurewebsites.net)",
+      "Bash(gh workflow list:*)",
+      "Bash(az:*)",
+      "Bash(powershell:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
