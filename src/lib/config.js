@@ -20,9 +20,7 @@ const isDevelopment = process.env.NODE_ENV === 'development' ||
 // Backend configuration
 const config = {
   // Use Azure backend in production, localhost in development
-  BACKEND_URL: isDevelopment 
-    ? "http://localhost:5006"
-    : "https://signalr-web-app-h8hkfddehthdbzhm.eastasia-01.azurewebsites.net",
+  BACKEND_URL: "https://signalr-web-app-h8hkfddehthdbzhm.eastasia-01.azurewebsites.net",
   
   // SignalR Hub endpoints
   CHAT_HUB: "/chathub",
