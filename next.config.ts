@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   // Azure App Service deployment optimizations
   compress: true,
   poweredByHeader: false,
+  output: 'standalone',
   
   // Environment-specific configuration
   env: {
